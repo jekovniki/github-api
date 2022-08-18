@@ -3,10 +3,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const rest = new _rest.RestServer({
-    // TODO: Fix this
-    port: process.env.REST_PORT ?? 'undefined'
-})
+const port = process.env.REST_PORT ?? '3000'
+
+export const rest = new _rest.RestServer({ port });
 
 async function main() {
     _rest.start(rest);

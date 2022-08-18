@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./dist/index.js",
+    "clean": "rm -rf dist",
+    "build": "tsc -p .",
+    "dev": "nodemon ./src/index.ts",
+    "test": "jest tests/ --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -27,6 +31,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1"
