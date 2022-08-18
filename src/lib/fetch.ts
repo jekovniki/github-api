@@ -20,11 +20,14 @@ class APIRequest {
                 }
              */
             
-            if (result.status === 404 || result.status === 406) {
+            if (result.status !== 200) {
                 return handleErrors(result);
             }
 
-            console.log(result.data);
+            if (result.status !== 201) {
+                return handleErrors(result);
+            }
+
             return result.data;
         } catch (error) {
             return handleErrors(error);
