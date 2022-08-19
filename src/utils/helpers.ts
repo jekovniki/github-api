@@ -1,10 +1,10 @@
-import { ErrorMessageResponse } from "../interfaces/fetch";
+import { TErrorMessageResponse } from "../interfaces/fetch";
 
-export function handleErrors(error: Record<string, any>): ErrorMessageResponse {
-    console.log(`Status: ${error.status}; Message: ${error.message}: ${error.code}`);
+export function handleErrors(error: Record<string, any>): TErrorMessageResponse {
+    console.log(`Status: ${error.response.status}; Message: ${error.message}: ${error.response.statusText}`);
 
     return {
-        status: error.status,
-        Message: `${error.message}:${error.statusText}`
+        status: error.response.status,
+        Message: `${error.message}:${error.response.statusText}`
     }
 }

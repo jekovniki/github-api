@@ -1,8 +1,8 @@
-import { ErrorMessageResponse } from "../interfaces/fetch";
+import { TErrorMessageResponse } from "../interfaces/fetch";
 import { TGetRepositoryResponse } from "../interfaces/get";
 import APIRequest from "../lib/fetch";
 
-export async function getRepository(username: string, accept: string = '' ): Promise<TGetRepositoryResponse | ErrorMessageResponse> {
+export async function getRepository(username: string, accept: string = '' ): Promise<TGetRepositoryResponse | TErrorMessageResponse> {
     const githubResponse: any = await APIRequest.get(`https://api.github.com/users/${username}/repos`);
     let response: any = [];
 
@@ -21,6 +21,5 @@ export async function getRepository(username: string, accept: string = '' ): Pro
     return response;
 }
 
-export async function getRepositoryBranches(username: string, repository: string) {
-    
-}
+// export async function getRepositoryBranches(username: string, repository: string) {
+// }

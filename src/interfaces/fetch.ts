@@ -2,7 +2,7 @@ export interface IFetch {
     get(url: string, customHeader: any ): Promise<object>
 }
 
-export type ErrorMessageResponse = {
+export type TErrorMessageResponse = {
     status: number;
     Message: string;
 }

@@ -4,15 +4,19 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 describe('Helpers', () => {
-    test('+ ApiRequest | should fetch data successfully', async () => {
-        const result = await getRepository('jekovniki');
-        console.log(result);
-        expect(result).toBeDefined();
+    test('+ getRepository | should return TGetRepositoryResponse', async () => {
+        const result: any = await getRepository('jekovniki');
+
+        for (const repository of result) {
+            expect(repository).toHaveProperty('repositoryName');
+            expect(repository).toHaveProperty('ownerLogin');
+            expect(repository).toHaveProperty('isForked');
+        }
     });
-    // test('test', async () => {
-    //     const token = process.env.PUBLIC_ACCESS_TOKEN;
-    //     const result = await axios.get(`https://api.github.com/users/jekovniki/repos`);
-    //     console.log(result.data);
-    //     expect(result).toBeDefined();
-    // })
+    test('- getRepository | should return TErrorMessageResponse', async () => {
+        const result: any = await getRepository('nonExistingUser123');
+
+        expect(result).toHaveProperty('status');
+        expect(result).toHaveProperty('Message');
+    });
 })

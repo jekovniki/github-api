@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { ErrorMessageResponse, IFetch } from '../interfaces/fetch';
+import { TErrorMessageResponse, IFetch } from '../interfaces/fetch';
 import { handleErrors } from '../utils/helpers';
 
 dotenv.config();
@@ -14,7 +14,7 @@ class APIRequest implements IFetch {
         this.token = publicAccessToken;
     }
 
-    public async get(url: string, customHeader: Record<string, any> = {}): Promise<Record<any, string> | ErrorMessageResponse> {
+    public async get(url: string, customHeader: Record<string, any> = {}): Promise<Record<any, string> | TErrorMessageResponse> {
         try {
             const requestInstance = axios.create({
                 headers: {
@@ -23,10 +23,6 @@ class APIRequest implements IFetch {
                 }
             });
             const result = await requestInstance.get(`${url}`);
-            
-            if (result.status !== 200 && result.status !== 201) {
-                return handleErrors(result);
-            }
 
             return result.data;
         } catch (error: any) {
