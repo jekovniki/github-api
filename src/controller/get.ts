@@ -2,8 +2,8 @@ import { TErrorMessageResponse } from "../interfaces/fetch";
 import { TGetRepositoryBranchesResponse, TGetRepositoryResponse } from "../interfaces/get";
 import APIRequest from "../lib/fetch";
 
-export async function getRepository(username: string, accept: string = '' ): Promise<TGetRepositoryResponse[] | TErrorMessageResponse> {
-    const data: any = await APIRequest.get(`https://api.github.com/users/${username}/repos`);
+export async function getRepository(username: string, accept: Record<string, any> = {} ): Promise<TGetRepositoryResponse[] | TErrorMessageResponse> {
+    const data: any = await APIRequest.get(`https://api.github.com/users/${username}/repos`, accept);
     let response: any = [];
 
     if('status' in data) {
