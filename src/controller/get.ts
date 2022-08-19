@@ -11,10 +11,13 @@ export async function getRepository(username: string, accept: Record<string, any
     }
 
     for(const repository of data) {
+        if (repository.fork === true) {
+            continue;
+        }
+        
         response.push({
             repositoryName: repository.name,
-            ownerLogin: repository.owner.login,
-            isForked: repository.fork
+            ownerLogin: repository.owner.login
         });
     }
 
