@@ -1,6 +1,6 @@
 import { getRepository } from '../src/controller/get';
-import axios from 'axios';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 describe('Helpers', () => {

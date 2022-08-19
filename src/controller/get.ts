@@ -20,6 +20,3 @@ export async function getRepository(username: string, accept: string = '' ): Pro
 
     return response;
 }
-
-// export async function getRepositoryBranches(username: string, repository: string) {
-// }
