@@ -19,11 +19,12 @@ describe('Controller', () => {
 
         expect(result).toHaveProperty('status');
         expect(result).toHaveProperty('Message');
+        
     });
 
     test('+ getRepositoryBranches | should return TGetRepositoryResponse', async () => {
         const result: any = await getRepositoryBranches('jekovniki', 'github-api');
-        
+
         console.log(result);
 
         expect(result).toBeDefined();
