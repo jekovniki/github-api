@@ -1,5 +1,5 @@
 export interface IFetch {
-    get(url: string, config?: any ): Promise<object>
+    get(url: string, customHeader: any ): Promise<object>
 }
 
 export type ErrorMessageResponse = {

@@ -13,12 +13,13 @@ class APIRequest implements IFetch {
     constructor(publicAccessToken: string) {
         this.token = publicAccessToken;
     }
-    
-    public async get(url: string, config: any = {}): Promise<Record<any, string> | ErrorMessageResponse> {
+
+    public async get(url: string, customHeader: Record<string, any> = {}): Promise<Record<any, string> | ErrorMessageResponse> {
         try {
             const requestInstance = axios.create({
                 headers: {
-                    'Authorization': `${this.token}`
+                    'Authorization': `${this.token}`,
+                    ...customHeader
                 }
             });
             const result = await requestInstance.get(`${url}`);
@@ -28,7 +29,7 @@ class APIRequest implements IFetch {
             }
 
             return result.data;
-        } catch (error) {
+        } catch (error: any) {
             return handleErrors(error);
         }
     }
