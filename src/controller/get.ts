@@ -1,7 +1,26 @@
+import { ErrorMessageResponse } from "../interfaces/fetch";
+import { TGetRepositoryResponse } from "../interfaces/get";
 import APIRequest from "../lib/fetch";
 
-export async function getRepository(username: string, headers: object = {}) {
-    const result = APIRequest.get(`https://api.github.com/users/${username}/repos`, { headers });
+export async function getRepository(username: string, accept: string = '' ): Promise<TGetRepositoryResponse | ErrorMessageResponse> {
+    const githubResponse: any = await APIRequest.get(`https://api.github.com/users/${username}/repos`);
+    let response: any = [];
 
-    return result;
+    if('status' in githubResponse) {
+        return githubResponse;
+    }
+
+    for(const repository of githubResponse) {
+        response.push({
+            repositoryName: repository.name,
+            ownerLogin: repository.owner.login,
+            isForked: repository.fork
+        });
+    }
+
+    return response;
+}
+
+export async function getRepositoryBranches(username: string, repository: string) {
+    
 }

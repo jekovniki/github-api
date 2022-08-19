@@ -8,7 +8,7 @@
     "clean": "rm -rf dist",
     "build": "tsc -p .",
     "dev": "nodemon ./src/index.ts",
-    "test": "jest tests/ --detectOpenHandles"
+    "test": "jest test/ "
   },
   "repository": {
     "type": "git",

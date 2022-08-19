@@ -1,30 +1,29 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { IFetch } from '../interfaces/fetch';
+import { ErrorMessageResponse, IFetch } from '../interfaces/fetch';
 import { handleErrors } from '../utils/helpers';
 
 dotenv.config();
 
-const authorizationToken = process.env.PERSONAL_ACCESS_TOKEN ?? '';
+const token = process.env.PUBLIC_ACCESS_TOKEN ?? '';
 
-class APIRequest {
-    public static async get(url: string, config: object = {}): Promise<any> {
-        try { 
-            const result: any = await axios.get(`${url}`, config);
+class APIRequest implements IFetch {
+    private token: string;
 
-            /**
-             * headers: {
-                    Authorization: `Bearer ${authorizationToken}`,
-                    'Accept': accept,
-                    'Content-Type': 'application/json'
+    constructor(publicAccessToken: string) {
+        this.token = publicAccessToken;
+    }
+    
+    public async get(url: string, config: any = {}): Promise<Record<any, string> | ErrorMessageResponse> {
+        try {
+            const requestInstance = axios.create({
+                headers: {
+                    'Authorization': `${this.token}`
                 }
-             */
+            });
+            const result = await requestInstance.get(`${url}`);
             
-            if (result.status !== 200) {
-                return handleErrors(result);
-            }
-
-            if (result.status !== 201) {
+            if (result.status !== 200 && result.status !== 201) {
                 return handleErrors(result);
             }
 
@@ -35,4 +34,4 @@ class APIRequest {
     }
 }
 
-export default APIRequest;
+export default new APIRequest(token);
