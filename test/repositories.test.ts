@@ -1,4 +1,4 @@
-import { getRepository, getRepositoryBranches } from '../src/controller/get';
+import { getRepository, getRepositoryBranches, getRepositoryWithBranches } from '../src/controller/repositories';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -21,13 +21,11 @@ const failedRequest = {
 describe('Controller', () => {
     test('+ getRepository | should return TGetRepositoryResponse', async () => {
         const result: any= await getRepository(successfullRequest.username, successfullRequest.header);
-
         successfullRequest.repository = result[0].repositoryName;
 
         for (const repository of result) {
             expect(repository).toHaveProperty('repositoryName');
             expect(repository).toHaveProperty('ownerLogin');
-            expect(repository).toHaveProperty('isForked');
         }
     });
 
@@ -61,5 +59,15 @@ describe('Controller', () => {
 
         expect(result).toHaveProperty('status');
         expect(result).toHaveProperty('Message');
+    });
+
+    test('+ getRepositoryWithBranches | should return success', async () => {
+        const array: any = await getRepositoryWithBranches(successfullRequest.username, successfullRequest.header);
+
+        for (const result of array) {
+            expect(result).toHaveProperty('repositoryName');
+            expect(result).toHaveProperty('branches');
+            expect(result.branches[0]).toHaveProperty('lastCommitSha');
+        }
     });
 });
