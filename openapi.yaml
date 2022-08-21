@@ -1,0 +1,130 @@
+openapi: 3.0.3
+info:
+  title: Repositories API
+  description: |-
+    This is a Repositories API, developed by Nikolay Zhekov for Ciklum
+    as part of job interview task.
+    The API provides an endpoint that given github username and "Accept" property fetches the user's repository and branches from the Github API.
+  contact:
+    email: jekovniki95@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/
+tags:
+  - name: repositories
+    description: The key functionality
+  - name: health check
+    description: Simple server health check
+paths:
+  /repositories/get:
+    post:
+      tags:
+        - repositories
+      summary: Get user repositories
+      description: Get all user repositories that are not forked
+      operationId: getRepositories
+      requestBody:
+        description: Get all user repositories that are not forked
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestRepository'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessfullResponseRepository'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponseRepositoryNotFound'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedResponseRepositoryNotAcceptable'
+  /health-check:
+      get:
+        tags:
+          - health check
+        summary: Server check
+        description: Check if the server is working properly
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    status:
+                      type: string
+                      format: string
+                      example: online
+components:
+  schemas:
+    RequestRepository:
+      type: object
+      properties:
+        username:
+          type: string
+          format: string
+          example: jekovniki
+        Accept:
+          type: string
+          format: string
+          example: application/json
+    SuccessfullResponseRepository:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            format: string
+            example: repositories-api
+          owner:
+            type: string
+            format: string
+            example: jekovniki
+          branches:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                  format: string
+                  example: API-Endpoint
+                commitSHA:
+                  type: string
+                  format: string
+                  example: 526fdef136a6b28d125b629f0b25a7b2120026ae
+    FailedResponseRepositoryNotFound:
+      type: object
+      properties:
+        status:
+          type: number
+          format: int32
+          example: 404
+        Message:
+          type: string
+          format: string
+          example: Request failed with status code 404:Not Found
+    FailedResponseRepositoryNotAcceptable:
+      type: object
+      properties:
+        status:
+          type: number
+          format: int32
+          example: 406
+        Message:
+          type: string
+          format: string
+          example: Request is not supported from the server:Not Acceptable
