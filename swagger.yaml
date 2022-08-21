@@ -1,0 +1,76 @@
+openapi: 3.0.0
+info:
+  title: Repositories API
+  description: API that given username and Accept(header), provides the GitHUB repositories with the branches for the given user;
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+  - description: The url for the local environment for the endpoint;
+paths:
+  /health-check:
+    summary: The health of the server
+    responses:
+      '200':
+        description: A JSON object with status
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                type: string
+  /repositories:
+    get:
+      summary: Return a list of user repositories and branches
+      responses:
+        '200':
+          description: A JSON array of repository owner, branches and overall data.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  items:
+                    type: object
+                    items:
+                      type: string
+                    items:
+                      type: string
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        items:
+                          type: string
+                        items:
+                          type: string
+        '403':
+          description: A JSON of status ACCESS FORBIDDEN and message
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+                items:
+                  type: string
+        '404':
+          description: A JSON of status NOT FOUND and message
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+                items:
+                  type: string
+        '406':
+          description: A JSON of status NOT ACCEPTABLE and message
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+                items:
+                  type: string            
