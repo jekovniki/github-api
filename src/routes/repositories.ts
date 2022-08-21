@@ -1,12 +1,17 @@
 import bodyParser from "body-parser";
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 import { RestServer } from "../lib/rest";
 import { getRepositoryWithBranches } from "../controller/repositories";
 import { handleErrors } from "../utils/helpers";
 
 export async function setRoutes(rest: RestServer) {
     const server= rest.getServer();
+    const swaggerDocument = YAML.load('../../swagger.yaml');
 
     server.use(bodyParser.json());
+    server.use('api-docs', swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument));
 
     server.get(`/health-check`, healthCheck);
 
