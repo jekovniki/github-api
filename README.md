@@ -24,6 +24,12 @@ $ npm install
 # Run the app
 $ npm start
 ```
+
+## Documentation
+
+How to work with the api:
+https://app.swaggerhub.com/apis/jekovniki/repositories-api/1.0.0
+
 ## License
 
 MIT
