@@ -2,46 +2,49 @@ import { TErrorMessageResponse } from "../interfaces/fetch";
 import { TGetRepositoryBranchesResponse, TGetRepositoryResponse } from "../interfaces/get";
 import APIRequest from "../lib/fetch";
 import dotenv from 'dotenv';
+import { combineTwoArrays } from "../utils/helpers";
 
 dotenv.config();
 
 const API = process.env.REPOSITORY_API;
 
-export async function getRepositoryWithBranches(username: string, accept: Record<string, any>) {
-    const repositories: any = await getRepository(username, accept);
-    
+export async function getRepositoryWithBranches(username: string, Accept: string) {
+    const repositories = await getRepository(username, Accept);
+    const branches: any = [];
     if('status' in repositories) {
         return repositories;
     }
-    for (const repository of repositories) {
-        const branch: any = await getRepositoryBranches(repository.ownerLogin, repository.repositoryName);
 
+    for (const repository of repositories) {
+        const branch = getRepositoryBranches(repository.owner, repository.name);
         if('status' in branch) {
             return branch;
         }
-        
-        repository.branches = branch;
-    }
 
-    return repositories;
+        branches.push(branch);
+    }
+    
+    const allBranches = await Promise.all(branches);
+    
+    return combineTwoArrays(repositories, allBranches, 'branches');
 }
 
-export async function getRepository(username: string, accept: Record<string, any> = {} ): Promise<TGetRepositoryResponse[] | TErrorMessageResponse> {
-    const data: any = await APIRequest.get(`${API}/users/${username}/repos`, accept);
+export async function getRepository(username: string, Accept: string ): Promise<TGetRepositoryResponse[] | TErrorMessageResponse> {
+    const repositories = await APIRequest.get(`${API}/users/${username}/repos`, { Accept });
     let response: any = [];
 
-    if('status' in data) {
-        return data;
+    if('status' in repositories) {
+        return repositories;
     }
 
-    for(const repository of data) {
+    for(const repository of repositories) {
         if (repository.fork === true) {
             continue;
         }
         
         response.push({
-            repositoryName: repository.name,
-            ownerLogin: repository.owner.login
+            name: repository.name,
+            owner: repository.owner.login
         });
     }
 
@@ -49,7 +52,7 @@ export async function getRepository(username: string, accept: Record<string, any
 }
 
 export async function getRepositoryBranches(owner: string, repository: string): Promise<TGetRepositoryBranchesResponse[] | TErrorMessageResponse> {
-    const branches: any = await APIRequest.get(`${API}/repos/${owner}/${repository}/branches`);
+    const branches = await APIRequest.get(`${API}/repos/${owner}/${repository}/branches`);
     let response = [];
     
     if('status' in branches) {
@@ -59,7 +62,7 @@ export async function getRepositoryBranches(owner: string, repository: string): 
     for(const branch of branches) {
         response.push({
             name: branch.name,
-            lastCommitSha: branch.commit.sha
+            commitSHA: branch.commit.sha
         });
     }
 
