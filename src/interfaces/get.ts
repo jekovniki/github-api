@@ -1,9 +1,10 @@
 export type TGetRepositoryResponse = {
-    repositoryName: string;
-    ownerLogin: string;
+    name: string;
+    owner: string;
+    branches: TGetRepositoryBranchesResponse[];
 }
 
 export type TGetRepositoryBranchesResponse = {
     name: string;
-    lastCommitSha: string;
+    commitSHA: string;
 }

@@ -24,7 +24,7 @@ export async function getRepositories(request: Record<string, any>, response: Re
     try {
         const apiRequest = request.body;
 
-        if (!apiRequest.username || !apiRequest.header) {
+        if (!apiRequest.username || !apiRequest.Accept) {
             response.json(handleErrors({
                 response: {
                     status: 400,

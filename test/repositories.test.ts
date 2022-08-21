@@ -1,7 +1,5 @@
+import axios from 'axios';
 import { getRepository, getRepositoryBranches, getRepositoryWithBranches } from '../src/controller/repositories';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const successfullRequest = {
     username: 'jekovniki',
@@ -18,7 +16,7 @@ const failedRequest = {
     }
 }
 
-describe('Controller', () => {
+describe('Unit testing', () => {
     test('+ getRepository | should return TGetRepositoryResponse', async () => {
         const result: any= await getRepository(successfullRequest.username, successfullRequest.header);
         successfullRequest.repository = result[0].repositoryName;
@@ -71,3 +69,15 @@ describe('Controller', () => {
         }
     });
 });
+
+describe('Integration testing', () => {
+    test('+ POST /repositories/get | should return successfull response', async () => {
+
+    });
+    test('- POST /repositories/get | should return failed response - 406', async () => {
+
+    });
+    test('- POST /repositories/get | should return failed response - 404', async () => {
+
+    });
+})
