@@ -1,6 +1,8 @@
 version: '3'
 services:
-  repository-api:
+  server:
+    container_name: repository-api
     build:
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "9000:3000"
