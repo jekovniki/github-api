@@ -16,15 +16,6 @@ class APIRequest implements IFetch {
 
     public async get(url: string, customHeader: Record<string, any> = {}): Promise<any> {
         try {
-            if ('Accept' in customHeader && customHeader.Accept === 'application/xml') {
-                return handleErrors({
-                    response: {
-                        status: 406,
-                        statusText: 'Not Acceptable'
-                    },
-                    message: 'Request is not supported from the server'
-                })
-            }
             const requestInstance = axios.create({
                 headers: {
                     'Authorization': `${this.token}`,
@@ -34,7 +25,7 @@ class APIRequest implements IFetch {
             const result = await requestInstance.get(url);
 
             return result.data;
-        } catch (error: any) {
+        } catch (error) {
             return handleErrors(error);
         }
     }
@@ -46,7 +37,7 @@ class APIRequest implements IFetch {
             });
 
             return await requestInstance.post(url, data);
-        } catch (error: any) {
+        } catch (error) {
             return handleErrors(error);
         }
     }

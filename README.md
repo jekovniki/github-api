@@ -13,10 +13,10 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/jekovniki/repositories-api.git
+$ git clone https://github.com/jekovniki/repository-api.git
 
 # Go into the repository
-$ cd repositories-api
+$ cd repository-api
 
 # Run the docker-compose command
 $ docker-composer up

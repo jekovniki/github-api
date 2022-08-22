@@ -20,9 +20,13 @@ export async function setRoutes(rest: RestServer) {
 }
 
 export function healthCheck(_request: Record<string, any>, response: Record<string, any>): void {
-    response.send({
-        status: 'online'
-    })
+    try {
+        response.send({
+            status: 'online'
+        });
+    } catch(error) {
+        response.json(handleErrors(error));
+    }
 }
 
 export async function getRepositories(request: Record<string, any>, response: Record<string, any>): Promise<void> {
@@ -41,7 +45,7 @@ export async function getRepositories(request: Record<string, any>, response: Re
 
         response.json(await getRepositoryWithBranches(apiRequest.username, apiRequest.Accept));
 
-    } catch (error: any) {
+    } catch (error) {
         response.json(handleErrors(error));
     }
 }

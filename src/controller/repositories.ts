@@ -2,13 +2,22 @@ import { TErrorMessageResponse } from "../interfaces/fetch";
 import { TGetRepositoryBranchesResponse, TGetRepositoryResponse } from "../interfaces/get";
 import APIRequest from "../lib/fetch";
 import dotenv from 'dotenv';
-import { combineTwoArrays } from "../utils/helpers";
+import { combineTwoArrays, handleErrors } from "../utils/helpers";
 
 dotenv.config();
 
 const API = process.env.REPOSITORY_API;
 
 export async function getRepositoryWithBranches(username: string, Accept: string) {
+    if (Accept === 'application/xml') {
+        return handleErrors({
+            response: {
+                status: 406,
+                statusText: 'Not Acceptable'
+            },
+            message: 'Request is not supported from the server'
+        })
+    }
     const repositories = await getRepository(username, Accept);
     const branches: any = [];
     if('status' in repositories) {
@@ -31,7 +40,7 @@ export async function getRepositoryWithBranches(username: string, Accept: string
 
 export async function getRepository(username: string, Accept: string ): Promise<TGetRepositoryResponse[] | TErrorMessageResponse> {
     const repositories = await APIRequest.get(`${API}/users/${username}/repos`, { Accept });
-    let response: any = [];
+    const response: any = [];
 
     if('status' in repositories) {
         return repositories;
@@ -53,7 +62,7 @@ export async function getRepository(username: string, Accept: string ): Promise<
 
 export async function getRepositoryBranches(owner: string, repository: string): Promise<TGetRepositoryBranchesResponse[] | TErrorMessageResponse> {
     const branches = await APIRequest.get(`${API}/repos/${owner}/${repository}/branches`);
-    let response = [];
+    const response = [];
     
     if('status' in branches) {
         return branches;

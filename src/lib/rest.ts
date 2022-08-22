@@ -12,7 +12,13 @@ export class RestServer {
     public start() {
         this.server.listen(this.port, () => {
             console.log(`Server listening on: localhost: ${this.port}`);
-        })
+        });
+    }
+
+    public close() {
+        this.server.listen(this.port, () => {
+            this.server.close();
+        });
     }
 
     public getServer(): any {
