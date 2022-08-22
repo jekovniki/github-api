@@ -18,14 +18,8 @@ $ git clone https://github.com/jekovniki/repositories-api.git
 # Go into the repository
 $ cd repositories-api
 
-# Build the docker image
-$ docker build -t nzhekov/repository-api:1.1 .
-you can replace the "nzhekov/repository-api:1.1" with whatever you prefer
-
-# Run the docker file
-$ docker run -it -p 9000:3000 37b6396ebee4
-9000:3000 - can be replaced with the preffered selection of ports
-37b6396ebee4 - is the id of the image. It should be replaced with whatever was generated
+# Run the docker-compose command
+$ docker-composer up
 ```
 
 ## Documentation

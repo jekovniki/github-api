@@ -1,8 +1,10 @@
-version: '3'
+version: "3"
 services:
   server:
     container_name: repository-api
     build:
+      context: .
       dockerfile: Dockerfile
+    image: nzhekov/repository-api:1.1
     ports:
       - "9000:3000"
