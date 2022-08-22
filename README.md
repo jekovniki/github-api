@@ -13,17 +13,20 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/amitmerchant1990/electron-markdownify
+$ git clone https://github.com/jekovniki/repositories-api.git
 
 # Go into the repository
-$ cd electron-markdownify
+$ cd repositories-api
 
-# Install dependencies
-$ npm install
-
-# Run the app
-$ npm start
+# Run the docker-compose command
+$ docker-composer up
 ```
+
+## Documentation
+
+How to work with the api:
+https://app.swaggerhub.com/apis/jekovniki/repositories-api/1.0.0
+
 ## License
 
 MIT

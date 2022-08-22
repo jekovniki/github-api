@@ -7,7 +7,7 @@ import { handleErrors } from "../utils/helpers";
 
 export async function setRoutes(rest: RestServer) {
     const server= rest.getServer();
-    const swaggerDocument = YAML.load('swagger.yaml');
+    const swaggerDocument = YAML.load('openapi.yaml');
 
     server.use(bodyParser.json());
     server.use('api-docs', swaggerUi.serve,
