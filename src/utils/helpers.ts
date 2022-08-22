@@ -1,6 +1,6 @@
 import { TErrorMessageResponse } from "../interfaces/fetch";
 
-export function handleErrors(error: Record<string, any>): TErrorMessageResponse {
+export function handleErrors(error: any): TErrorMessageResponse {
     console.log(`Status: ${error?.response?.status}; Message: ${error.message}: ${error?.response?.statusText}`);
 
     return {

@@ -26,11 +26,11 @@ describe('Unit testing', () => {
         }
     });
 
-    test('- getRepository | should return TErrorMessageResponse: code 406', async () => {
+    test('- getRepository | should return TErrorMessageResponse: code 415', async () => {
         const result: any = await getRepository(successfullRequest.username, failedRequest.Accept);
 
         expect(result).toHaveProperty('status');
-        expect(result.status).toBe(406);
+        expect(result.status).toBe(415);
         expect(result).toHaveProperty('Message');
     });
 
