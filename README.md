@@ -24,7 +24,9 @@ create .env file from .env.default
 # Run the docker-compose command
 $ docker-composer up
 ```
+
 The server is now  working on port 9000;
+
 ## Documentation
 
 How to work with the api:
