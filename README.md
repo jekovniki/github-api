@@ -18,6 +18,9 @@ $ git clone https://github.com/jekovniki/repository-api.git
 # Go into the repository
 $ cd repository-api
 
+# Environment variables
+create .env file from .env.default
+
 # Run the docker-compose command
 $ docker-composer up
 ```
