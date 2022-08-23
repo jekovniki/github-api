@@ -7,4 +7,4 @@ services:
       dockerfile: Dockerfile
     image: nzhekov/repository-api:1.1
     ports:
-      - "9000:3000"
+      - "3000:9000"
